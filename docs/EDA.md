@@ -27,7 +27,6 @@ Fraud datasets are **highly imbalanced**.
 
 ```python
 df['is_fraud'].value_counts()
-
 df['is_fraud'].value_counts(normalize=True) * 100
 ```
 
@@ -53,7 +52,7 @@ Example insight:
 
 ---
 
-# 3. Missing Values
+## 3. Missing Values
 
 Check whether any columns have missing values.
 
@@ -80,61 +79,103 @@ Example insight:
 
 ---
 
-# 4. Transaction Amount Analysis
+## 4. Univariate Analysis
 
-Fraud often occurs in **different amount distributions**.
+Univariate analysis focuses on examining a single variable at a time to understand its distribution, spread, and potential outliers.
 
-### Code
+### Methods
+
+- Histograms
+- Box plots
+- Violin plots
+
+### Example Code
+
+Histogram (distribution of transaction amount):
 
 ```python
-sns.boxplot(x='is_fraud', y='amt', data=df)
+sns.histplot(df['amt'], bins=50, kde=True)
+plt.title("Distribution of Transaction Amount")
 plt.show()
 ```
 
-Or
+Box plot (detect outliers):
 
 ```python
-sns.histplot(df['amt'], bins=50)
+sns.boxplot(y=df['amt'])
+plt.title("Transaction Amount Boxplot")
 plt.show()
 ```
 
-### Questions to answer
+Violin plot (distribution comparison):
 
-- Are fraud transactions larger?
-- Are there outliers?
+```python
+sns.violinplot(y=df['amt'])
+plt.title("Transaction Amount Distribution")
+plt.show()
+```
+
+### What to analyze
+
+- skewness of the distribution
+- presence of outliers
+- unusual spikes
 
 Example insight:
 
-> Fraud transactions tend to occur at **higher transaction amounts compared to legitimate ones**.
+> Transaction amounts show a right-skewed distribution, indicating that most transactions are small with a few large outliers.
 
 ---
 
-# 5. Feature Distribution
+## 5. Bivariate / Multivariate Analysis
 
-Look at distribution of key features.
+This step analyzes relationships between two or more variables to identify patterns that may indicate fraudulent behavior.
 
-### Code
+### Methods
+
+- Scatter plots
+- Correlation heatmaps
+- Pair plots
+
+### Scatter Plot Example
 
 ```python
-df.hist(figsize=(12,10))
+sns.scatterplot(x='amt', y='age', hue='is_fraud', data=df)
+plt.title("Transaction Amount vs Age")
 plt.show()
 ```
 
-Or for specific columns:
+### Correlation Heatmap
 
 ```python
-sns.histplot(df['amt'], kde=True)
+corr = df.corr()
+
+plt.figure(figsize=(10,8))
+sns.heatmap(corr, cmap="coolwarm")
+plt.title("Feature Correlation Heatmap")
+plt.show()
 ```
 
-### What to look for
+### Pair Plot (for multiple feature relationships)
 
-- skewed distributions
-- outliers
-- unusual spikes
+```python
+sns.pairplot(df[['amt', 'age', 'city_pop', 'is_fraud']], hue='is_fraud')
+plt.show()
+```
+
+### What to analyze
+
+- relationships between variables
+- features correlated with fraud
+- clusters or separations between fraud and legitimate transactions
+
+Example insight:
+
+> Certain feature combinations show distinct separation between fraudulent and legitimate transactions, suggesting potential predictive value.
 
 ---
 
-# 6. Correlation Analysis
+## 6. Correlation Analysis
 
 This helps identify **important predictive features**.
 
@@ -161,7 +202,7 @@ print(corr_target)
 
 ---
 
-# 7. Time Pattern Analysis (If dataset has time)
+## 7. Time Pattern Analysis (If dataset has time)
 
 Fraud often occurs at certain times.
 
@@ -178,7 +219,7 @@ Questions:
 
 ---
 
-# 8. Feature vs Fraud Comparison
+## 8. Feature vs Fraud Comparison
 
 Compare each important feature against fraud.
 
@@ -196,7 +237,7 @@ sns.violinplot(x='is_fraud', y='amt', data=df)
 
 ---
 
-# 9. Outlier Detection
+## 9. Outlier Detection
 
 Outliers may represent fraud.
 
@@ -211,7 +252,7 @@ Look for extreme values.
 
 ---
 
-# 10. Key Insights Section (Most Important)
+## 10. Key Insights Section (Most Important)
 
 Your EDA is not the plots — it's the **conclusions**.
 
@@ -227,7 +268,7 @@ Example:
 
 ---
 
-# Recommended Notebook Structure
+## Recommended Notebook Structure
 
 Create:
 
@@ -241,8 +282,8 @@ Sections:
 1. Dataset Overview
 2. Class Distribution
 3. Missing Values
-4. Feature Distribution
-5. Fraud vs Legitimate Comparison
+4. Univariate Analysis
+5. Bivariate / Multivariate Analysis
 6. Correlation Analysis
 7. Key Insights
 ```
