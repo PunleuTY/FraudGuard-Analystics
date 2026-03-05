@@ -71,6 +71,7 @@ The dataset contains historical credit card transaction records labeled as fraud
 ---
 
 ## 6. Project Structure
+
 ```
 credit-card-fraud-detection/
 │
@@ -92,18 +93,20 @@ credit-card-fraud-detection/
 ├── requirements.txt
 └── README.md
 ```
-- `data/` → Raw and processed datasets  
-- `notebooks/` → EDA and experimentation  
-- `src/` → Modularized pipeline and reusable code  
-- `models/` → Saved trained models  
-- `reports/` → Figures and final report  
-- `app/` → Streamlit deployment  
+
+- `data/` → Raw and processed datasets
+- `notebooks/` → EDA and experimentation
+- `src/` → Modularized pipeline and reusable code
+- `models/` → Saved trained models
+- `reports/` → Figures and final report
+- `app/` → Streamlit deployment
 
 ---
 
 ## 7. Technology Stack
 
 ### Programming & Analysis
+
 - Python
 - Pandas
 - NumPy
@@ -111,12 +114,14 @@ credit-card-fraud-detection/
 - Seaborn
 
 ### Machine Learning
+
 - Scikit-learn
 - XGBoost
 - Imbalanced-learn (SMOTE experiments)
 - SHAP (model explainability)
 
 ### Web Interface
+
 - Streamlit
 
 ---
@@ -124,31 +129,38 @@ credit-card-fraud-detection/
 ## 8. Methodology
 
 ### Step 1: Data Exploration
+
 - Class distribution analysis
 - Transaction amount comparison
 - Correlation analysis
 - Fraud pattern investigation
 
 ### Step 2: Data Preprocessing
+
 - Missing value handling
 - Encoding categorical variables
 - Feature scaling
 - Stratified train-test split
 
 ### Step 3: Modeling
+
 Baseline and advanced models:
+
 - Logistic Regression
 - Decision Tree
 - Random Forest
 - Gradient Boosting (XGBoost)
 
 ### Step 4: Handling Imbalance
+
 - Class weighting
 - SMOTE experimentation
 - Threshold adjustment
 
 ### Step 5: Model Evaluation
+
 Metrics used:
+
 - Precision
 - Recall
 - F1-score
@@ -180,6 +192,7 @@ The deployed application allows users to:
 - Observe model confidence
 
 To run the application:
+
 ```bash
 streamlit run app/streamlit_app.py
 ```
@@ -188,10 +201,24 @@ streamlit run app/streamlit_app.py
 
 ## 11. Installation
 
-Clone the repository and install dependencies:
+- Clone the repository
+
+```bash
+git clone https://github.com/PunleuTY/FraudGuard-Analystics
+```
+
+- Create and activate Python virtual environment:
+
+```bash
+python -m venv venv
+source venv/bin/activate  # Mac/Linux
+source venv/Scripts/activate  # On Windows: venv\Scripts\activate
+```
+
+- Install dependencies:
+
 ```bash
 pip install -r requirements.txt
-
 ```
 
 ---
