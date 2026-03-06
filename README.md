@@ -239,11 +239,24 @@ streamlit run app/streamlit_app.py
 
 ## 11. Installation
 
-Clone the repository and install dependencies:
+- Clone the repository
+
+```bash
+git clone https://github.com/PunleuTY/FraudGuard-Analystics
+```
+
+- Create and activate Python virtual environment:
+
+```bash
+python -m venv venv
+source venv/bin/activate  # Mac/Linux
+source venv/Scripts/activate  # On Windows: venv\Scripts\activate
+```
+
+- Install dependencies:
 
 ```bash
 pip install -r requirements.txt
-
 ```
 
 ---
