@@ -40,7 +40,7 @@ The system aims to reduce false negatives (missed fraud) while minimizing false 
 ## 4. Dataset
 
 Source: Kaggle  
-Dataset Link: https://www.kaggle.com/datasets/kartik2112/fraud-detection
+Dataset Link: <https://www.kaggle.com/datasets/kartik2112/fraud-detection>
 
 The dataset contains historical credit card transaction records labeled as fraudulent or legitimate.
 
@@ -72,34 +72,72 @@ The dataset contains historical credit card transaction records labeled as fraud
 
 ## 6. Project Structure
 
+Below is the sample structure of project
+
 ```
+
 credit-card-fraud-detection/
+│
+├── README.md
+├── requirements.txt
+├── .gitignore
 │
 ├── data/
 │   ├── raw/
-│   └── processed/
+│   │   └── fraud_dataset.csv
+│   ├── processed/
+│   │   └── processed_data.csv
+│   └── external/
 │
 ├── notebooks/
+│   ├── 01_eda.ipynb
+│   ├── 02_preprocessing.ipynb
+│   ├── 03_model_baseline.ipynb
+│   ├── 04_model_tuning.ipynb
+│   └── 05_evaluation_analysis.ipynb
 │
 ├── src/
+│   ├── config.py
+│   │
+│   ├── data/
+│   │   ├── load_data.py
+│   │   ├── preprocess.py
+│   │   └── split_data.py
+│   │
+│   ├── features/
+│   │   └── feature_engineering.py
+│   │
+│   ├── models/
+│   │   ├── train.py
+│   │   ├── evaluate.py
+│   │   ├── predict.py
+│   │   └── tune.py
+│   │
+│   ├── utils/
+│   │   ├── metrics.py
+│   │   └── visualization.py
+│   │
+│   └── pipeline.py
 │
 ├── models/
+│   ├── baseline_model.pkl
+│   ├── tuned_model.pkl
+│   └── scaler.pkl
 │
 ├── reports/
+│   ├── figures/
+│   └── final_report.pdf
 │
-├── app/
-│   └── streamlit_app.py
-│
-├── requirements.txt
-└── README.md
+└── app/
+    └── streamlit_app.py
 ```
 
-- `data/` → Raw and processed datasets
-- `notebooks/` → EDA and experimentation
-- `src/` → Modularized pipeline and reusable code
-- `models/` → Saved trained models
-- `reports/` → Figures and final report
-- `app/` → Streamlit deployment
+- `data/` → Raw and processed datasets  
+- `notebooks/` → EDA and experimentation  
+- `src/` → Modularized pipeline and reusable code  
+- `models/` → Saved trained models  
+- `reports/` → Figures and final report  
+- `app/` → Streamlit deployment  
 
 ---
 
