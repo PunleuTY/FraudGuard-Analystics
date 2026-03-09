@@ -72,6 +72,11 @@ The dataset contains historical credit card transaction records labeled as fraud
 
 ## 6. Project Structure
 
+<<<<<<< HEAD
+=======
+Below is the sample structure of project
+
+>>>>>>> 9e5d442bac39713de13274bf86aa11e7ae877ea1
 ```
 
 credit-card-fraud-detection/
@@ -238,7 +243,25 @@ streamlit run app/streamlit_app.py
 
 ## 11. Installation
 
+<<<<<<< HEAD
 Clone the repository and install dependencies:
+=======
+- Clone the repository
+
+```bash
+git clone https://github.com/PunleuTY/FraudGuard-Analystics
+```
+
+- Create and activate Python virtual environment:
+
+```bash
+python -m venv venv
+source venv/bin/activate  # Mac/Linux
+source venv/Scripts/activate  # On Windows: venv\Scripts\activate
+```
+
+- Install dependencies:
+>>>>>>> 9e5d442bac39713de13274bf86aa11e7ae877ea1
 
 ```bash
 pip install -r requirements.txt
