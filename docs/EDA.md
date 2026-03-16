@@ -1,299 +1,50 @@
-# Exploratory Data Analysis (EDA) for Fraud Detection
-
-## 1. Start With Dataset Overview
-
-First understand **what the data looks like**.
-
-### Key questions
-
-- How many rows and columns?
-- What are the data types?
-- Are there missing values?
-- What features exist?
-
-### What to write in report
-
-- Dataset contains **X transactions** and **Y features**
-- Feature types include **numeric, categorical**
-- Initial statistics show **transaction amount ranges from ...**
-
----
-
-## 2. Check Class Distribution (Very Important)
-
-Fraud datasets are **highly imbalanced**.
-
-### Code
-
-```python
-df['is_fraud'].value_counts()
-df['is_fraud'].value_counts(normalize=True) * 100
-```
-
-### Visualization
-
-```python
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-sns.countplot(x='is_fraud', data=df)
-plt.title("Fraud vs Legitimate Transactions")
-plt.show()
-```
-
-### What to analyze
-
-- Fraud percentage
-- imbalance ratio
-
-Example insight:
-
-> Fraud cases represent only **0.17% of total transactions**, confirming a highly imbalanced classification problem.
-
----
-
-## 3. Missing Values
-
-Check whether any columns have missing values.
-
-### Code
-
-```python
-df.isnull().sum()
-```
-
-If missing exists:
-
-```python
-(df.isnull().sum() / len(df)) * 100
-```
-
-### What to analyze
-
-- columns with missing values
-- strategy (drop, fill, etc.)
-
-Example insight:
-
-> No missing values were found in the dataset.
-
----
-
-## 4. Univariate Analysis
-
-Univariate analysis focuses on examining a single variable at a time to understand its distribution, spread, and potential outliers.
-
-### Methods
-
-- Histograms
-- Box plots
-- Violin plots
-
-### Example Code
-
-Histogram (distribution of transaction amount):
-
-```python
-sns.histplot(df['amt'], bins=50, kde=True)
-plt.title("Distribution of Transaction Amount")
-plt.show()
-```
-
-Box plot (detect outliers):
-
-```python
-sns.boxplot(y=df['amt'])
-plt.title("Transaction Amount Boxplot")
-plt.show()
-```
-
-Violin plot (distribution comparison):
-
-```python
-sns.violinplot(y=df['amt'])
-plt.title("Transaction Amount Distribution")
-plt.show()
-```
-
-### What to analyze
-
-- skewness of the distribution
-- presence of outliers
-- unusual spikes
-
-Example insight:
-
-> Transaction amounts show a right-skewed distribution, indicating that most transactions are small with a few large outliers.
-
----
-
-## 5. Bivariate / Multivariate Analysis
-
-This step analyzes relationships between two or more variables to identify patterns that may indicate fraudulent behavior.
-
-### Methods
-
-- Scatter plots
-- Correlation heatmaps
-- Pair plots
-
-### Scatter Plot Example
-
-```python
-sns.scatterplot(x='amt', y='age', hue='is_fraud', data=df)
-plt.title("Transaction Amount vs Age")
-plt.show()
-```
-
-### Correlation Heatmap
-
-```python
-corr = df.corr()
-
-plt.figure(figsize=(10,8))
-sns.heatmap(corr, cmap="coolwarm")
-plt.title("Feature Correlation Heatmap")
-plt.show()
-```
-
-### Pair Plot (for multiple feature relationships)
-
-```python
-sns.pairplot(df[['amt', 'age', 'city_pop', 'is_fraud']], hue='is_fraud')
-plt.show()
-```
-
-### What to analyze
-
-- relationships between variables
-- features correlated with fraud
-- clusters or separations between fraud and legitimate transactions
-
-Example insight:
-
-> Certain feature combinations show distinct separation between fraudulent and legitimate transactions, suggesting potential predictive value.
-
----
-
-## 6. Correlation Analysis
-
-This helps identify **important predictive features**.
-
-### Code
-
-```python
-corr = df.corr()
-
-plt.figure(figsize=(10,8))
-sns.heatmap(corr, cmap="coolwarm")
-plt.show()
-```
-
-Better: correlation with fraud only.
-
-```python
-corr_target = corr['is_fraud'].sort_values(ascending=False)
-print(corr_target)
-```
-
-### Insight example
-
-> Transaction amount and merchant category show moderate correlation with fraud occurrence.
-
----
-
-## 7. Time Pattern Analysis (If dataset has time)
-
-Fraud often occurs at certain times.
-
-Example:
-
-```python
-sns.countplot(x='hour', hue='is_fraud', data=df)
-```
-
-Questions:
-
-- Do frauds occur more at night?
-- Are there temporal patterns?
-
----
-
-## 8. Feature vs Fraud Comparison
-
-Compare each important feature against fraud.
-
-Example:
-
-```python
-sns.boxplot(x='is_fraud', y='amt', data=df)
-```
-
-or
-
-```python
-sns.violinplot(x='is_fraud', y='amt', data=df)
-```
-
----
-
-## 9. Outlier Detection
-
-Outliers may represent fraud.
-
-```python
-Q1 = df['amt'].quantile(0.25)
-Q3 = df['amt'].quantile(0.75)
-
-IQR = Q3 - Q1
-```
-
-Look for extreme values.
-
----
-
-## 10. Key Insights Section (Most Important)
-
-Your EDA is not the plots — it's the **conclusions**.
-
-Example:
-
-### Key Findings
-
-1. The dataset is highly imbalanced with only **X% fraud transactions**.
-2. Fraudulent transactions tend to occur at **higher transaction amounts**.
-3. Certain merchant categories appear more frequently in fraud cases.
-4. Feature distributions show significant skewness requiring scaling.
-5. No missing values were detected in the dataset.
-
----
-
-## Recommended Notebook Structure
-
-Create:
-
-```
-notebooks/01_eda.ipynb
-```
-
-Sections:
-
-```
-1. Dataset Overview
-2. Class Distribution
-3. Missing Values
-4. Univariate Analysis
-5. Bivariate / Multivariate Analysis
-6. Correlation Analysis
-7. Key Insights
-```
-
-Example:
-
-Bad EDA:
-
-> Here is a histogram of transaction amount.
-
-Good EDA:
-
-> Fraud transactions appear concentrated in higher transaction amounts, suggesting transaction size may be an important predictive feature.
+## Bivariate Analysis (Relationship Between Two Variables)
+
+Common Combinations:
+
+- Numerical vs Numerical (Correlation, Scatter Plot)
+- Categorical vs Numerical (Grouped mean, Boxplot by category, ANOVA)
+- Categorical vs Categorical (Crosstab, Chi-sware test, stacked bar chart)
+
+It helps us to answer "what influences what or how they interact with each other? "
+
+### Numerical vs Numerical
+
+- Correlation matrix
+  - `amt`
+  - `city_pop`
+  - `lat`
+  - `long`
+  - `merch_lat`
+  - `merch_long`
+  - `unix_time`
+
+    ![alt text](image.png)
+
+> **Interpretation**: Most numerical variables show near-zero correlation with transaction amount, indicating that transaction value is largely independent of geographic location, customer age, and city population.
+
+### Numerical vs Target
+
+- Transaction amount vs fraud
+  - `amt` vs `is_fraud`
+- Distance vs fraud
+  - `distance` vs `is_fraud`
+- Population vs fraud
+  - `city_pop` vs `is_fraud`
+- Transaction hour vs fraud
+  - `hour` vs `is_fraud`
+
+![alt text](image-1.png)
+
+> **Signal**:
+> trans_hour → strongest signal
+> amt → moderate signal
+> distance → weak signal
+> city_pop → almost no signal
+
+> **Interpretation**:
+>
+> - Transaction Hour (trans_hour) – Fraud transactions appear more concentrated during late hours, showing the clearest difference from normal transactions.
+> - Transaction Amount (amt) – Fraud tends to occur at moderately higher amounts, though legitimate transactions contain more extreme outliers.
+> - Distance (distance) – Fraud and non-fraud distributions are very similar, suggesting distance alone is a weak indicator.
+> - City Population (city_pop) – Shows almost no difference between fraud and non-fraud, indicating little relationship with fraud occurrence.
